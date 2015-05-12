@@ -4,22 +4,11 @@ from flask import Flask
 from flask._compat import string_types
 
 from narcissus.exts import setup_database
+from narcissus.util import app_root, prefix_upload_folder
 from narcissus.master.view import master_app
 from narcissus.album.view import album_app
 from narcissus.slider.view import slider_app
-
-
-def app_root(*path):
-    root = os.path.dirname(os.path.abspath(__name__))
-    if path:
-        return os.path.join(root, *path)
-    else:
-        return root
-
-
-def prefix_upload_folder(app):
-    folder = app.config['UPLOAD_FOLDER']
-    app.config['UPLOAD_FOLDER'] = app_root(folder)
+from narcissus.thumb.view import thumb_app
 
 
 def create_app(import_name=None, config=None):
@@ -39,5 +28,6 @@ def create_app(import_name=None, config=None):
     app.register_blueprint(master_app)
     app.register_blueprint(album_app)
     app.register_blueprint(slider_app)
+    app.register_blueprint(thumb_app)
 
     return app
