@@ -1,0 +1,7 @@
+DEBUG = True
+UPLOAD_FOLDER = 'upload/'
+IMG_SLICE_PATH = '_db/slice/%s.db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///../_db/narcissus.db'
+SQLALCHEMY_BINDS = {
+    'thumb_db': 'sqlite:///../_db/thumb.db'
+}
