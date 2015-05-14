@@ -2,8 +2,8 @@ from flask import Blueprint, abort, url_for, render_template, request
 from flask import redirect
 
 from narcissus.exts import db
-from narcissus.album.model import Album, Image, ImageQuery
-from narcissus.album.service import parse_path
+from narcissus.album.model import Album, Image
+from narcissus.album.service import parse_path, image_response
 
 
 album_app = Blueprint('album', __name__)
@@ -42,3 +42,8 @@ def album_create():
         db.session.add(album)
         db.session.commit()
         return redirect(url_for('album.album_list'))
+
+
+@album_app.route('/album/<int:id>/preview')
+def album_preview(id):
+    pass

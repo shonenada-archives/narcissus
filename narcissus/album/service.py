@@ -2,10 +2,10 @@ from StringIO import StringIO
 
 import Image
 from werkzeug import secure_filename
-from flask import current_app, make_response
+from flask import current_app, make_response, abort
 
 from narcissus.settings import UPLOAD_STRATEGY
-from narcissus.album.model import Image as ImageModel, ImageData
+from narcissus.album.model import Image as ImageModel, ImageData, ImageQuery
 
 
 class UnknownStrategyError(Exception):
@@ -52,7 +52,7 @@ def parse_path(path):
 def image_response(img):
     filename = img.title or 'img'
     disposition = 'attachment; filename=%s.jpg' % filename
-    if not img.path[:4] is 'path':
+    if not img.path[:4] == 'path':
         return abort(404)
 
     db_id, image_id = parse_path(img.path)

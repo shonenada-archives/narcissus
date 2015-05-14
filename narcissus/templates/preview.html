@@ -1,0 +1,93 @@
+{% import 'util.jinja' as tool %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Narcissus</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}" />
+    <script src="{{ url_for('static', filename='scripts/components/jquery/dist/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/components/blocksit/blocksit.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/components/jquery.lazyload/jquery.lazyload.js') }}"></script>
+  </head>
+  <body>
+    <div id="shadow" class="no-transition"></div>
+    <div id="preview" class="no-transition"></div>
+    <a href="javascript:void(0)" id="back-top">返回顶部</a>
+    <div id="main">
+      <div id="wall">
+        {% for p in pagination.items %}
+        <div class="album">
+          <div class="info">
+            <div class="pic">
+              <img class="lazy no-transition" src="{{ url_for('static', filename='images/grey.png') }}" data-original="{{ url_for('album.album_blob', id=p.id) }}" data-id="{{ p.id }}" />
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {{ tool.render_pagination(pagination, 'master.preview') | safe }}
+    </div>
+  </body>
+  <script>
+    $(function() {
+      $('#back-top').hide();
+      $('#back-top').click(function () {
+        $('body,html').animate({scrollTop: 0}, 1000);
+      });
+
+      $('img.lazy').lazyload({
+        effect: 'fadeIn',
+        load: function() {
+          $('#wall').BlocksIt({
+            numOfCol: 4,
+            offsetX: 8,
+            offsetY: 8
+          });
+        }
+      });
+
+      var look_up = function(pid) {
+        var base_root = "{{ url_for('album.album_image', id=99999999) }}";
+        return base_root.replace('99999999', pid);
+      };
+
+      window.page = 2;
+      var load_image = function() {
+        $.get('/lazy' + window.page, function(res, status) {
+          if (status == 'success') {
+            for (idx in res.items) {
+              item = res.items[idx];
+              var inner = $('<a></a>');
+              var album = $('<div class="album"></div>');
+              var info = $('<div class="info"></div>');
+              var pic = $('<div class="pic"></div>');
+              var img = $('<img class="lazy" src="{{ url_for('static', filename='images/grey.png') }}" data-original="' + look_up(item.id) + '" />');
+              pic.append(img);
+              info.append(pic);
+              album.append(info);
+              inner.append(album);
+              $('#wall').append(inner);
+            }
+            window.page = window.page + 1;
+          }
+        }, 'json');
+      };
+
+      $('.pic img').click(function () {
+        $('#preview').empty();
+        var img = $('<img />');
+        img.attr('src', $(this).attr('src'));
+        var view = $('<br /><a style="color: #fff" href="/album/blob/' + $(this).attr('data-id') + '" target="_blank">View</a> <a style="color: #fff;" href="/album/image/' + $(this).attr('data-id') + '/edit">Edit</a>');
+        $('#preview').css({'height': $(window).height() + 'px'});
+        $('#preview').append(img);
+        $('#preview').append(view);
+        $('#preview').fadeIn();
+        $('#preview').fadeIn();
+      });
+      $('#preview').click(function() {
+        $('#shadow').fadeOut();
+        $(this).fadeOut();
+      });
+    });
+  </script>
+</html>
