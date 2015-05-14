@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Narcissus</title>
+  </head>
+  <body>
+    <a href="{{ url_for('album.album_create') }}">Create Album</a><br />
+    {% for album in albums %}
+    {{ album.id }}.{{ album.name }}<br />
+    {% endfor %}
+  </body>
+</html>

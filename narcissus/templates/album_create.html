@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Narcissus</title>
+  </head>
+  <body>
+    <form method="post" action="{{ url_for('album.album_create') }}">
+      <section>
+        <label id="label_name" for="name">Name: </label>
+        <input id="name" name="name" type="text" />
+      </section>
+      <section>
+        <button>Submit</button>
+      </section>
+    </form>
+  </body>
+</html>

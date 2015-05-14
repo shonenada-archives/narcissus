@@ -1,0 +1,11 @@
+{% macro render_pagination(pagination, endpoint) %}
+<div id="pagination">
+  <a href="{{ url_for(endpoint, page=pagination.page-1, per=pagination.per_page) }}" class="page-item">Prev</a>
+  {% for page in pagination.iter_pages() %}
+    {% if page %}
+      <a href="{{ url_for(endpoint, page=page, per=pagination.per_page) }}" class="page-item">{{ page }}</a>
+    {% endif %}
+  {% endfor %}
+  <a href="{{ url_for(endpoint, page=pagination.page+1, per=pagination.per_page) }}" class="page-item">Next</a>
+</div>
+{% endmacro %}

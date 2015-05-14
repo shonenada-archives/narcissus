@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Narcissus</title>
+  </head>
+
+  <body>
+    <form action="{{ url_for('master.tag_create') }}" method="POST">
+      <label id="label_name" for="name">Name: </label>
+      <input name="name" id="name" type="text" />
+      <button>Submit</button>
+    </form>
+  </body>
+</html>

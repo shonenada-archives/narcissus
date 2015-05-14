@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Narcissus</title>
+  </head>
+
+  <body>
+    <a href="{{ url_for('master.tag_create') }}">Create Tag</a><br />
+    {% for each in tags %}
+    {{ each.id }}.{{ each.name }}<br />
+    {% endfor %}
+  </body>
+</html>
+
