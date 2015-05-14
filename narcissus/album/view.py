@@ -26,6 +26,12 @@ def album_image(id):
     return '''<img src="%s" />''' % (url_for('album.album_blob', id=id))
 
 
+@album_app.route('/album/image/<int:id>/edit')
+def album_edit(id):
+    img = Image.query.get_or_404(id)
+    pass
+
+
 @album_app.route('/album/list')
 def album_list():
     albums = Album.query.all()

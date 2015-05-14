@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Narcissus</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}" />
+    <script src="{{ url_for('static', filename='scripts/components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/components/blocksit/blocksit.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/components/jquery.lazyload/jquery.lazyload.js') }}"></script>
+    <style>
+      img {
+        height: auto;
+        max-width: 90%;
+        max-height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      {% for each in pagination.items %}
+      <a href="{{ url_for('album.album_edit', id=each.id) }}" target="_blank"><img src="{{ url_for('album.album_blob', id=each.id) }}" id="theImage" /></a>
+      <br />
+      {% endfor %}
+    </div>
+  </body>
+</html>
