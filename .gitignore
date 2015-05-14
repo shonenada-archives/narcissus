@@ -62,3 +62,4 @@ narcissus/static/scripts
 narcissus/static/components
 .tmp/
 .DS_Store
+*.swp

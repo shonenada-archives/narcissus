@@ -46,4 +46,11 @@ def album_create():
 
 @album_app.route('/album/<int:id>/preview')
 def album_preview(id):
-    pass
+    album = Album.query.get_or_404(id)
+    page = int(request.args.get('page', 1))
+    per = int(request.args.get('pre', 30))
+    images = (Image.query
+              .order_by(Image.id.desc())
+              .filter(Image.album_id==album.id))
+    pagination = images.paginate(page=page, per_page=per)
+    return render_template('preview.html', pagination=pagination)

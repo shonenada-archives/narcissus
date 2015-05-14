@@ -77,12 +77,12 @@
         $('#preview').empty();
         var img = $('<img />');
         img.attr('src', $(this).attr('src'));
-        var view = $('<br /><a style="color: #fff" href="/album/blob/' + $(this).attr('data-id') + '" target="_blank">View</a> <a style="color: #fff;" href="/album/image/' + $(this).attr('data-id') + '/edit">Edit</a>');
+        var view = $('<br /><a style="color: #fff" href="/album/image/' + $(this).attr('data-id') + '" target="_blank">View</a> <a style="color: #fff;" href="/album/image/' + $(this).attr('data-id') + '/edit">Edit</a>');
         $('#preview').css({'height': $(window).height() + 'px'});
         $('#preview').append(img);
         $('#preview').append(view);
         $('#preview').fadeIn();
-        $('#preview').fadeIn();
+        $('#shadow').fadeIn();
       });
       $('#preview').click(function() {
         $('#shadow').fadeOut();
